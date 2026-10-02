@@ -212,11 +212,10 @@ function Splash({onDone}){
 
 // Login
 function Login({onLogin,users}){
-  const [em,setEm]=useState("admin@enginebg.pe");
-  const [pw,setPw]=useState("admin123");
+  const [em,setEm]=useState("");
+  const [pw,setPw]=useState("");
   const [err,setErr]=useState("");
   const [ld,setLd]=useState(false);
-  const [showQ,setShowQ]=useState(false);
   const go=(u)=>{
     const usr=u||users.find(x=>x.email===em&&x.pass===pw);
     if(!usr){setErr("Credenciales incorrectas");return;}
@@ -237,17 +236,6 @@ function Login({onLogin,users}){
         <Inp label="Contraseña" value={pw} onChange={setPw} type="password"/>
         {err&&<div style={{color:C.er,fontSize:12,marginBottom:10}}>⚠ {err}</div>}
         <Btn label={ld?"Verificando...":"Ingresar al sistema"} onClick={()=>go()} col={BR.p} full/>
-        <button onClick={()=>setShowQ(!showQ)} style={{background:"none",border:"none",color:C.a,fontSize:12,marginTop:12,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>{showQ?"▲ Ocultar cuentas de prueba":"▼ Ver cuentas de prueba"}</button>
-        {showQ&&(
-          <div style={{marginTop:8,background:C.g0,borderRadius:12,padding:"10px 14px"}}>
-            {users.map(u=>(
-              <div key={u.id} onClick={()=>go(u)} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 0",borderBottom:"1px solid "+C.g2,cursor:"pointer"}}>
-                <div><div style={{fontSize:12,fontWeight:600,color:C.g7}}>{u.name}</div><div style={{fontSize:10,color:C.g4}}>{u.email}</div></div>
-                <Pill label={rLb(u.role)} color={rCo(u.role)} bg={rBg(u.role)} sz={10}/>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
