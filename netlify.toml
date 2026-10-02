@@ -10,3 +10,4 @@
 [build.environment]
   NODE_VERSION = "18"
   CI = "false"
+  TSC_COMPILE_ON_ERROR = "true"
