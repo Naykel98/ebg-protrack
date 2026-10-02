@@ -785,7 +785,6 @@ function ProjDetail({user,project,advances,assets,obra,adicionales,onBack,onNav,
   const [tab,setTab]=useState("resumen");
   const [modal,setModal]=useState(null);
   const [toast,setToast]=useState("");
-  const [newAdv,setNewAdv]=useState(null);
   const showToast=m=>{setToast(m);setTimeout(()=>setToast(""),2200);};
   const pAdv=advances.filter(a=>a.pid===project.id);
   const prg=cPrg(project.partidas),val=cVal(project.partidas),bud=cBud(project.partidas);
@@ -794,10 +793,6 @@ function ProjDetail({user,project,advances,assets,obra,adicionales,onBack,onNav,
   const addApproved=pAdic.filter(a=>a.status==="approved").reduce((s,a)=>s+a.total,0);
   const TABS=[{id:"resumen",ic:"📊",l:"Resumen"},{id:"partidas",ic:"📋",l:"Partidas"},{id:"activos",ic:"⚙️",l:"Activos"},{id:"cuaderno",ic:"📓",l:"Cuaderno"},{id:"val",ic:"💰",l:"Valor."},{id:"docs",ic:"📁",l:"Docs"},{id:"adic",ic:"➕",l:"Adic."}];
   const dels=leaves(project.partidas).filter(pt=>delay(pt.endDate,pt.avance)>0);
-
-  if(newAdv)return(
-    <NewAdvanceScreen user={user} project={project} onBack={()=>setNewAdv(null)} onSave={d=>{newAdv(d);setNewAdv(null);}}/>
-  );
 
   return(
     <div style={{flex:1,display:"flex",flexDirection:"column",background:C.g0,overflow:"hidden",position:"relative"}}>
