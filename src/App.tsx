@@ -192,13 +192,7 @@ function Splash({onDone}){
       <div style={{position:"absolute",top:-60,right:-60,width:200,height:200,border:"1px solid rgba(255,255,255,0.07)",borderRadius:"50%"}}/>
       <div style={{position:"absolute",bottom:-80,left:-80,width:240,height:240,border:"1px solid rgba(255,255,255,0.05)",borderRadius:"50%"}}/>
       <div style={{transform:"scale("+(ph>=1?1:0.4)+") translateY("+(ph>=1?0:40)+"px)",opacity:ph>=1?1:0,transition:"all 0.7s cubic-bezier(0.34,1.56,0.64,1)",display:"flex",flexDirection:"column",alignItems:"center"}}>
-        <div style={{width:90,height:90,background:"rgba(255,255,255,0.1)",borderRadius:24,border:"2px solid rgba(255,255,255,0.25)",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:20,boxShadow:"0 20px 60px rgba(0,0,0,0.3)"}}>
-          <svg width="52" height="52" viewBox="0 0 40 40" fill="none">
-            <path d="M6 20L20 6L34 20L20 34Z" fill="none" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
-            <rect x="14" y="14" width="12" height="12" rx="3" fill="white" opacity="0.9"/>
-            <circle cx="20" cy="20" r="3" fill="#1A7DC4"/>
-          </svg>
-        </div>
+        <img src="/icons/icon-192.png" alt="EBG" style={{width:90,height:90,borderRadius:24,marginBottom:20,border:"2px solid rgba(255,255,255,0.25)",boxShadow:"0 20px 60px rgba(0,0,0,0.3)"}}/>
         <div style={{opacity:ph>=2?1:0,transform:"translateY("+(ph>=2?0:16)+"px)",transition:"all 0.5s ease",textAlign:"center"}}>
           <div style={{color:"white",fontSize:22,fontWeight:800,letterSpacing:-0.5}}>Engine Business</div>
           <div style={{color:"#C9A227",fontSize:22,fontWeight:800,letterSpacing:-0.5}}>Group</div>
@@ -232,13 +226,7 @@ function Login({onLogin,users}){
     <div style={{flex:1,display:"flex",flexDirection:"column"}}>
       <div style={{background:"linear-gradient(160deg,#081A45,#0D2B6B 60%,#1A7DC4 100%)",padding:"44px 32px 36px",display:"flex",flexDirection:"column",alignItems:"center",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:-40,right:-40,width:150,height:150,border:"1px solid rgba(255,255,255,0.07)",borderRadius:"50%"}}/>
-        <div style={{width:72,height:72,background:"rgba(255,255,255,0.12)",borderRadius:20,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16,border:"2px solid rgba(255,255,255,0.22)"}}>
-          <svg width="44" height="44" viewBox="0 0 40 40" fill="none">
-            <path d="M6 20L20 6L34 20L20 34Z" fill="none" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
-            <rect x="14" y="14" width="12" height="12" rx="3" fill="white" opacity="0.9"/>
-            <circle cx="20" cy="20" r="3" fill="#1A7DC4"/>
-          </svg>
-        </div>
+        <img src="/icons/icon-192.png" alt="EBG" style={{width:80,height:80,borderRadius:20,marginBottom:16,border:"2px solid rgba(255,255,255,0.25)",boxShadow:"0 8px 32px rgba(0,0,0,0.35)"}}/>
         <div style={{color:"white",fontSize:20,fontWeight:800}}>Engine Business Group</div>
         <div style={{color:"#C9A227",fontSize:11,letterSpacing:2,marginTop:4,textTransform:"uppercase"}}>Sistema de Supervisión</div>
       </div>
