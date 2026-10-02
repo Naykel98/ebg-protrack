@@ -1,4 +1,4 @@
-import {useState,useEffect} from "react";
+import {useState,useEffect,useRef} from "react";
 import {BarChart,Bar,AreaChart,Area,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,Cell} from "recharts";
 
 const TOD=new Date("2025-02-20");
@@ -179,6 +179,38 @@ const NavBar=({active,onNav,role})=>{
     </div>
   );
 };
+
+// PhotoCapture
+function PhotoCapture({photos,setPhotos}:{photos:string[],setPhotos:any}){
+  const camRef=useRef<HTMLInputElement>(null);
+  const galRef=useRef<HTMLInputElement>(null);
+  const handle=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    if(!e.target.files)return;
+    const urls=Array.from(e.target.files).map(f=>URL.createObjectURL(f));
+    setPhotos((p:string[])=>[...p,...urls]);
+    e.target.value="";
+  };
+  return(
+    <div>
+      <div style={{display:"flex",gap:8,marginBottom:6}}>
+        <button type="button" onClick={()=>camRef.current?.click()} style={{flex:1,background:C.aL,border:"1px dashed "+C.a,borderRadius:10,padding:"10px 6px",cursor:"pointer",fontSize:12,color:BR.p,fontWeight:600,fontFamily:"inherit"}}>📷 Cámara</button>
+        <button type="button" onClick={()=>galRef.current?.click()} style={{flex:1,background:C.g0,border:"1px dashed "+C.g3,borderRadius:10,padding:"10px 6px",cursor:"pointer",fontSize:12,color:C.g7,fontWeight:600,fontFamily:"inherit"}}>🖼️ Galería</button>
+        <input ref={camRef} type="file" accept="image/*" capture="environment" style={{display:"none"}} onChange={handle}/>
+        <input ref={galRef} type="file" accept="image/*" multiple style={{display:"none"}} onChange={handle}/>
+      </div>
+      {photos.length>0&&(
+        <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:4}}>
+          {photos.map((url,i)=>(
+            <div key={i} style={{position:"relative"}}>
+              <img src={url} alt="" style={{width:64,height:64,objectFit:"cover",borderRadius:8,border:"1px solid "+C.g2}}/>
+              <button type="button" onClick={()=>setPhotos((p:string[])=>p.filter((_:any,j:number)=>j!==i))} style={{position:"absolute",top:-5,right:-5,width:18,height:18,borderRadius:99,background:C.er,border:"none",color:"white",fontSize:9,cursor:"pointer",padding:0,lineHeight:1}}>✕</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 // Splash
 function Splash({onDone}){
@@ -882,21 +914,23 @@ function NewObraForm({onSave}){
   const now=new Date();
   const hoy=now.toISOString().split("T")[0];
   const hora=now.getHours().toString().padStart(2,"0")+":"+now.getMinutes().toString().padStart(2,"0");
-  const [d,setD]=useState({fecha:hoy,hora,nota:"",photos:0});
-  const u=k=>v=>setD(x=>({...x,[k]:v}));
+  const [d,setD]=useState({fecha:hoy,hora,nota:""});
+  const [photoUrls,setPhotoUrls]=useState<string[]>([]);
+  const u=(k:string)=>(v:string)=>setD((x:any)=>({...x,[k]:v}));
   return(<>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}><Inp label="Fecha" value={d.fecha} onChange={u("fecha")} type="date"/><Inp label="Hora" value={d.hora} onChange={u("hora")} type="time"/></div>
-    <div style={{marginBottom:10}}><div style={{fontSize:11,color:C.g5,fontWeight:600,marginBottom:4}}>Entrada del cuaderno</div><textarea value={d.nota} onChange={e=>setD(x=>({...x,nota:e.target.value}))} placeholder="Describe las actividades realizadas, personal, condiciones, incidentes..." style={{width:"100%",border:"1.5px solid "+C.g2,borderRadius:10,padding:"10px 12px",fontSize:13,color:C.g9,background:C.g0,outline:"none",minHeight:100,resize:"none",boxSizing:"border-box"}}/></div>
+    <div style={{marginBottom:10}}><div style={{fontSize:11,color:C.g5,fontWeight:600,marginBottom:4}}>Entrada del cuaderno</div><textarea value={d.nota} onChange={e=>setD((x:any)=>({...x,nota:e.target.value}))} placeholder="Describe las actividades realizadas, personal, condiciones, incidentes..." style={{width:"100%",border:"1.5px solid "+C.g2,borderRadius:10,padding:"10px 12px",fontSize:13,color:C.g9,background:C.g0,outline:"none",minHeight:100,resize:"none",boxSizing:"border-box"}}/></div>
     <div style={{marginBottom:12}}>
-      <div style={{fontSize:11,color:C.g5,fontWeight:600,marginBottom:6}}>Fotos de campo</div>
-      <button onClick={()=>setD(x=>({...x,photos:x.photos+1}))} style={{background:C.aL,border:"1px dashed "+C.a,borderRadius:10,padding:"10px 16px",width:"100%",cursor:"pointer",fontSize:12,color:BR.p,fontWeight:600}}>📷 Agregar foto ({d.photos})</button>
+      <div style={{fontSize:11,color:C.g5,fontWeight:600,marginBottom:6}}>Fotos de campo ({photoUrls.length})</div>
+      <PhotoCapture photos={photoUrls} setPhotos={setPhotoUrls}/>
     </div>
-    <Btn label="✓ Registrar entrada" onClick={()=>d.nota&&onSave(d)} col={BR.p} full/>
+    <Btn label="✓ Registrar entrada" onClick={()=>d.nota&&onSave({...d,photos:photoUrls.length,photoUrls})} col={BR.p} full/>
   </>);
 }
 function NewAdvForm({user,project,onSave}){
   const ls=leaves(project.partidas);
-  const [d,setD]=useState({ptid:ls[0]?.id||"",pct:"0",obs:"",photos:0});
+  const [d,setD]=useState({ptid:ls[0]?.id||"",pct:"0",obs:""});
+  const [photoUrls,setPhotoUrls]=useState<string[]>([]);
   const u=k=>v=>setD(x=>({...x,[k]:v}));
   const pt=ls.find(p=>p.id===d.ptid);
   return(<>
@@ -908,8 +942,11 @@ function NewAdvForm({user,project,onSave}){
       <PBar v={parseInt(d.pct)} col={BR.p} h={6}/>
     </div>
     <div style={{marginBottom:10}}><div style={{fontSize:11,color:C.g5,fontWeight:600,marginBottom:4}}>Observaciones</div><textarea value={d.obs} onChange={e=>u("obs")(e.target.value)} placeholder="Estado, condiciones, incidencias..." style={{width:"100%",border:"1.5px solid "+C.g2,borderRadius:10,padding:"9px 12px",fontSize:13,outline:"none",minHeight:70,resize:"none",boxSizing:"border-box",background:C.g0}}/></div>
-    <button onClick={()=>setD(x=>({...x,photos:x.photos+1}))} style={{background:C.aL,border:"1px dashed "+C.a,borderRadius:10,padding:"8px 16px",width:"100%",cursor:"pointer",fontSize:12,color:BR.p,fontWeight:600,marginBottom:10}}>📷 Agregar foto ({d.photos})</button>
-    <Btn label="✓ Registrar avance" onClick={()=>onSave({...d,fecha:new Date().toISOString().split("T")[0]})} col={BR.p} full/>
+    <div style={{marginBottom:10}}>
+      <div style={{fontSize:11,color:C.g5,fontWeight:600,marginBottom:6}}>Fotos ({photoUrls.length})</div>
+      <PhotoCapture photos={photoUrls} setPhotos={setPhotoUrls}/>
+    </div>
+    <Btn label="✓ Registrar avance" onClick={()=>onSave({...d,fecha:new Date().toISOString().split("T")[0],photos:photoUrls.length,photoUrls})} col={BR.p} full/>
   </>);
 }
 function NewAdicForm({onSave}){
@@ -1154,6 +1191,18 @@ export default function App(){
   const [adicionales,setAdicionales]=useState(ADIC0);
   const [selProj,setSelProj]=useState(null);
   const [hist,setHist]=useState([]);
+
+  // Request camera + notification permissions after splash
+  useEffect(()=>{
+    if(!splash){
+      if(navigator.mediaDevices?.getUserMedia)
+        navigator.mediaDevices.getUserMedia({video:true,audio:false})
+          .then(s=>s.getTracks().forEach(t=>t.stop()))
+          .catch(()=>{});
+      if(typeof Notification!=="undefined"&&Notification.permission==="default")
+        Notification.requestPermission().catch(()=>{});
+    }
+  },[splash]);
 
   const go=s=>{setHist(h=>[...h,screen]);setScreen(s);};
   const back=()=>{const p=hist[hist.length-1]||"home";setHist(h=>h.slice(0,-1));setScreen(p);};
