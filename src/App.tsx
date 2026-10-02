@@ -188,23 +188,23 @@ function Splash({onDone}){
     return()=>ts.forEach(clearTimeout);
   },[]);
   return(
-    <div style={{flex:1,background:"linear-gradient(160deg,#081A45 0%,#0D2B6B 55%,#1A7DC4 100%)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden"}}>
+    <div style={{flex:1,background:"#ffffff",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden"}}>
       <div style={{position:"absolute",top:-60,right:-60,width:200,height:200,border:"1px solid rgba(13,43,107,0.07)",borderRadius:"50%"}}/>
       <div style={{position:"absolute",bottom:-80,left:-80,width:240,height:240,border:"1px solid rgba(13,43,107,0.05)",borderRadius:"50%"}}/>
       <div style={{transform:"scale("+(ph>=1?1:0.4)+") translateY("+(ph>=1?0:40)+"px)",opacity:ph>=1?1:0,transition:"all 0.7s cubic-bezier(0.34,1.56,0.64,1)",display:"flex",flexDirection:"column",alignItems:"center"}}>
-        <img src="/icons/icon-192.png" alt="EBG" style={{width:90,height:90,borderRadius:0,marginBottom:20,boxShadow:"0 20px 60px rgba(0,0,0,0.4)"}}/>
+        <img src="/icons/icon-192.png" alt="EBG" style={{width:90,height:90,borderRadius:0,marginBottom:20,boxShadow:"0 8px 32px rgba(13,43,107,0.15)"}}/>
         <div style={{opacity:ph>=2?1:0,transform:"translateY("+(ph>=2?0:16)+"px)",transition:"all 0.5s ease",textAlign:"center"}}>
-          <div style={{color:"white",fontSize:22,fontWeight:800,letterSpacing:-0.5}}>Engine Business</div>
-          <div style={{color:"#C9A227",fontSize:22,fontWeight:800,letterSpacing:-0.5}}>Group</div>
+          <div style={{color:"#0D2B6B",fontSize:22,fontWeight:800,letterSpacing:-0.5}}>Engine Business</div>
+          <div style={{color:"#3ABEFF",fontSize:22,fontWeight:800,letterSpacing:-0.5}}>Group</div>
         </div>
-        <div style={{width:ph>=3?120:0,height:1,background:"linear-gradient(90deg,transparent,rgba(201,162,39,0.8),transparent)",transition:"width 0.5s ease",margin:"14px 0"}}/>
-        <div style={{opacity:ph>=3?1:0,color:"rgba(255,255,255,0.5)",fontSize:11,letterSpacing:2,textTransform:"uppercase"}}>Supervisión · Gestión · Control</div>
+        <div style={{width:ph>=3?120:0,height:1,background:"linear-gradient(90deg,transparent,rgba(58,190,255,0.7),transparent)",transition:"width 0.5s ease",margin:"14px 0"}}/>
+        <div style={{opacity:ph>=3?1:0,color:"rgba(13,43,107,0.55)",fontSize:11,letterSpacing:2,textTransform:"uppercase"}}>Supervisión · Gestión · Control</div>
       </div>
       <div style={{position:"absolute",bottom:60,left:60,right:60,opacity:ph>=2?1:0,transition:"opacity 0.4s ease"}}>
-        <div style={{height:2,background:"rgba(255,255,255,0.1)",borderRadius:99,overflow:"hidden"}}>
-          <div style={{height:"100%",width:ph>=4?"100%":ph>=3?"70%":ph>=2?"30%":"0%",background:"linear-gradient(90deg,#1A7DC4,#C9A227)",borderRadius:99,transition:"width 0.6s ease"}}/>
+        <div style={{height:2,background:"rgba(13,43,107,0.08)",borderRadius:99,overflow:"hidden"}}>
+          <div style={{height:"100%",width:ph>=4?"100%":ph>=3?"70%":ph>=2?"30%":"0%",background:"linear-gradient(90deg,#3ABEFF,#83A2D8)",borderRadius:99,transition:"width 0.6s ease"}}/>
         </div>
-        <div style={{color:"rgba(255,255,255,0.3)",fontSize:10,textAlign:"center",marginTop:8}}>{ph>=4?"Listo":"Iniciando..."}</div>
+        <div style={{color:"rgba(13,43,107,0.45)",fontSize:10,textAlign:"center",marginTop:8}}>{ph>=4?"Listo":"Iniciando..."}</div>
       </div>
     </div>
   );
