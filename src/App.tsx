@@ -1134,9 +1134,7 @@ function Profile({user,onLogout,onNav}){
         </div>
         <Card style={{marginBottom:14,background:"linear-gradient(135deg,#081A45,#0D2B6B)",border:"none"}}>
           <div style={{display:"flex",alignItems:"center",gap:12}}>
-            <div style={{width:40,height:40,background:"rgba(255,255,255,0.12)",borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center"}}>
-              <svg width="24" height="24" viewBox="0 0 40 40" fill="none"><path d="M6 20L20 6L34 20L20 34Z" fill="none" stroke="white" strokeWidth="2" strokeLinejoin="round"/><rect x="14" y="14" width="12" height="12" rx="3" fill="white" opacity="0.9"/></svg>
-            </div>
+            <img src="/icons/icon-72.png" alt="EBG" style={{width:40,height:40,borderRadius:12,border:"1px solid rgba(255,255,255,0.2)"}}/>
             <div><div style={{color:"white",fontSize:13,fontWeight:700}}>Engine Business Group</div><div style={{color:BR.g,fontSize:10,letterSpacing:1}}>Supervisión · Gestión · Control</div></div>
           </div>
         </Card>
